@@ -100,16 +100,8 @@ echo -e "Welcome to Trudesk Install Script for Ubuntu 20.04 (fresh)!
 Lets make sure we have all the required packages before moving forward..."
 
 echo -e "Setting Clock..."
-# NTP=$(dpkg-query -W -f='${Status}' ntp 2>/dev/null | grep -c "ok installed")
-#   if [ $(dpkg-query -W -f='${Status}' ntp 2>/dev/null | grep -c "ok installed") -eq 0 ];
-#   then
-#     echo -e "${YELLOW}Installing ntp${NC}"
-#     apt-get install -y ntp ntpdate > /dev/null;
-#     elif [ $(dpkg-query -W -f='${Status}' ntp 2>/dev/null | grep -c "ok installed") -eq 1 ];
-#     then
-#       echo -e "${GREEN}ntp is installed!${NC}"
-#   fi
-apt-get install -y ntp ntpdate > /dev/null;
+
+apt-get install -y ntp ntpdate;
 systemctl stop ntp
 ntpdate 0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org
 timedatectl
@@ -131,13 +123,13 @@ case $response in
 
 *)
 start_spinner "Performing ${GREEN}apt-get update${NC}";
-apt-get update > /dev/null;
+apt-get update;
 stop_spinner $?;
 WGET=$(dpkg-query -W -f='${Status}' wget 2>/dev/null | grep -c "ok installed")
   if [ $(dpkg-query -W -f='${Status}' wget 2>/dev/null | grep -c "ok installed") -eq 0 ];
   then
     start_spinner "${YELLOW}Installing wget${NC}"
-    apt-get install wget --yes > /dev/null;
+    apt-get install wget --yes;
     stop_spinner $?
     elif [ $(dpkg-query -W -f='${Status}' wget 2>/dev/null | grep -c "ok installed") -eq 1 ];
     then
@@ -147,7 +139,7 @@ PYTHON=$(dpkg-query -W -f='${Status}' python 2>/dev/null | grep -c "ok installed
   if [ $(dpkg-query -W -f='${Status}' python 2>/dev/null | grep -c "ok installed") -eq 0 ];
   then
     start_spinner "${YELLOW}Installing python${NC}"
-    apt-get install python --yes > /dev/null;
+    apt-get install python --yes;
     stop_spinner $?
     elif [ $(dpkg-query -W -f='${Status}' python 2>/dev/null | grep -c "ok installed") -eq 1 ];
     then
@@ -157,7 +149,7 @@ CURL=$(dpkg-query -W -f='${Status}' curl 2>/dev/null | grep -c "ok installed")
   if [ $(dpkg-query -W -f='${Status}' curl 2>/dev/null | grep -c "ok installed") -eq 0 ];
   then
     start_spinner "${YELLOW}Installing curl${NC}"
-    apt-get install curl --yes > /dev/null;
+    apt-get install curl --yes;
     stop_spinner $?
     elif [ $(dpkg-query -W -f='${Status}' curl 2>/dev/null | grep -c "ok installed") -eq 1 ];
     then
@@ -167,7 +159,7 @@ GNUPG=$(dpkg-query -W -f='${Status}' gnupg 2>/dev/null | grep -c "ok installed")
   if [ $(dpkg-query -W -f='${Status}' gnupg 2>/dev/null | grep -c "ok installed") -eq 0 ];
   then
     start_spinner "${YELLOW}Installing gnupg${NC}"
-    apt-get install curl --yes > /dev/null;
+    apt-get install curl --yes;
     stop_spinner $?
     elif [ $(dpkg-query -W -f='${Status}' gnupg 2>/dev/null | grep -c "ok installed") -eq 1 ];
     then
@@ -177,7 +169,7 @@ GIT=$(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed")
   if [ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -eq 0 ];
   then
     start_spinner "${YELLOW}Installing git${NC}"
-    apt-get install git --yes > /dev/null;
+    apt-get install git --yes;
     stop_spinner $?
     elif [ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -eq 1 ];
     then
@@ -187,24 +179,14 @@ NODEJS=$(dpkg-query -W -f='${Status}' nodejs 2>/dev/null | grep -c "ok installed
   if [ $(dpkg-query -W -f='${Status}' nodejs 2>/dev/null | grep -c "ok installed") -eq 0 ];
   then
     start_spinner "${YELLOW}Installing nodejs${NC}"
-    curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash > /dev/null 2>&1
-    apt-get install -y nodejs > /dev/null 2>&1;
-    apt-get install -y build-essential > /dev/null 2>&1;
+    curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash
+    apt-get install -y nodejs;
+    apt-get install -y build-essential;
     stop_spinner $?
     elif [ $(dpkg-query -W -f='${Status}' nodejs 2>/dev/null | grep -c "ok installed") -eq 1 ];
     then
       echo -e "${GREEN}nodejs is installed!${NC}"
   fi
-# NODE=$(dpkg-query -W -f='${Status}' nodejs-legacy 2>/dev/null | grep -c "ok installed")
-#   if [ $(dpkg-query -W -f='${Status}' nodejs-legacy 2>/dev/null | grep -c "ok installed") -eq 0 ];
-#   then
-#     echo -e "${YELLOW}Installing nodejs-legacy${NC}"
-#     apt-get install nodejs-legacy --yes;
-#     elif [ $(dpkg-query -W -f='${Status}' nodejs-legacy 2>/dev/null | grep -c "ok installed") -eq 1 ];
-#     then
-#       echo -e "${GREEN}nodejs-legacy is installed!${NC}"
-#   fi
-
   ;;
 esac
 
@@ -215,11 +197,11 @@ read -r -p "Do you want to install Elasticsearch? [y/N]: " response </dev/tty
 case $response in
 [yY]*)
   start_spinner "${YELLOW}Installing Elasticsearch${NC}"
-  wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add > /dev/null 2>&1
-  echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-6.x.list > /dev/null 2>&1
-  apt-get update > /dev/null;
-  apt-get install -y openjdk-8-jre > /dev/null 2>&1;
-  apt-get install -y apt-transport-https elasticsearch kibana > /dev/null 2>&1;
+  wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add
+  echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-6.x.list
+  apt-get update;
+  apt-get install -y openjdk-8-jre;
+  apt-get install -y apt-transport-https elasticsearch kibana;
   echo "network.host: [_local_]" >> /etc/elasticsearch/elasticsearch.yml
   systemctl enable elasticsearch
   systemctl start elasticsearch
@@ -231,11 +213,11 @@ read -r -p "Do you want to install MongoDB? [y/N]: " response </dev/tty
 case $response in
 [yY]*)
   start_spinner "${YELLOW}Installing MongoDB 4.0${NC}"
-  apt-get install gnupg > /dev/null
-  wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add - > /dev/null 2>&1
-  echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list > /dev/null 2>&1
-  apt-get update > /dev/null;
-  apt-get install -y mongodb-org mongodb-org-shell > /dev/null;
+  apt-get install gnupg
+  wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+  echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+  apt-get update
+  apt-get install -y mongodb-org mongodb-org-shell
   systemctl daemon-reload
   systemctl enable mongod
   service mongod start
@@ -249,8 +231,8 @@ db.system.users.remove({});
 db.system.version.remove({});
 db.system.version.insert({"_id": "authSchema", "currentVersion": 3});
 EOL
-  mongo /etc/mongosetup.js > /dev/null 2>&1
-  service mongod restart > /dev/null 2>&1
+  mongo /etc/mongosetup.js
+  service mongod restart 
 
 echo "Restarting MongoDB..."
 sleep 5
@@ -259,14 +241,14 @@ cat > /etc/mongosetup_trudesk.js <<EOL
 db = db.getSiblingDB('trudesk');
 db.createUser({"user": "trudesk", "pwd": "#TruDesk1$", "roles": ["readWrite", "dbAdmin"]});
 EOL
-  mongo /etc/mongosetup_trudesk.js > /dev/null 2>&1
+  mongo /etc/mongosetup_trudesk.js
   stop_spinner $?
   ;;
 *)
   echo -e "${RED}MongoDB install skipped...${NC}"
   start_spinner "${YELLOW}Installing MongoDB Tools...${NC}"
-  wget https://repo.mongodb.org/apt/ubuntu/dists/focal/mongodb-org/4.4/multiverse/binary-amd64/mongodb-org-tools_4.4.8_amd64.deb > /dev/null 2>&1;
-  dpkg -i mongodb-org-tools_4.4.8_amd64.deb > /dev/null;
+  wget https://repo.mongodb.org/apt/ubuntu/dists/focal/mongodb-org/4.4/multiverse/binary-amd64/mongodb-org-tools_4.4.8_amd64.deb;
+  dpkg -i mongodb-org-tools_4.4.8_amd64.deb;
   rm -rf mongodb-org-tools_4.4.8_amd64.deb
   stop_spinner $?
   ;;
@@ -274,16 +256,16 @@ esac
 
 start_spinner "${YELLOW}Downloading the latest version of ${NC}Trudesk${RED}.${NC}"
 cd /etc/
-git clone http://www.github.com/polonel/trudesk > /dev/null 2>&1;
+git clone http://www.github.com/polonel/trudesk;
 cd /etc/trudesk
 touch /etc/trudesk/logs/output.log
 stop_spinner $?
 start_spinner "${BLUE}Building...${NC} (its going to take a few minutes)"
-npm install -g yarn pm2 grunt-cli > /dev/null 2>&1;
+npm install -g yarn pm2 grunt-cli;
 # Lets checkout the version tag
-git checkout v1.1.10 > /dev/null 2>&1;
-yarn install > /dev/null 2>&1;
+git checkout v1.1.10;
+yarn install;
 sleep 3
 stop_spinner $?
 # This last line must be all in one command due to the exit nature of the build command.
-start_spinner "${BLUE}Starting...${NC}" && yarn build > /dev/null && NODE_ENV=production pm2 start /etc/trudesk/app.js --name trudesk -l /etc/trudesk/logs/output.log --merge-logs > /dev/null && pm2 save > /dev/null && pm2 startup > /dev/null 2>&1 && stop_spinner $? && echo -e "${GREEN}Installation Complete.${NC}"
+start_spinner "${BLUE}Starting...${NC}" && yarn build && NODE_ENV=production pm2 start /etc/trudesk/app.js --name trudesk -l /etc/trudesk/logs/output.log --merge-logs && pm2 save && pm2 startup && stop_spinner $? && echo -e "${GREEN}Installation Complete.${NC}"
