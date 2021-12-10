@@ -77,7 +77,7 @@ case $response in
 
 	if [ $(dpkg-query -W -f='${Status}' gnupg 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
 		echo -e "${YELLOW}Installing gnupg${NC}"
-		apt-get install curl --yes;
+		apt-get install gnupg --yes;
 	elif [ $(dpkg-query -W -f='${Status}' gnupg 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
 		echo -e "${GREEN}gnupg is installed!${NC}"
 	fi
