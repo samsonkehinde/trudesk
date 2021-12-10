@@ -170,8 +170,8 @@ EOL
 	;;
 esac
 
-echo -e "${YELLOW}Downloading the latest version of ${NC}Trudesk${RED}.${NC}"
-mkdir /etc/trudesk && cp -fR ../../../trudesk /etc/trudesk
+mkdir /etc/trudesk 2>/dev/null
+cp -fR ../../../trudesk /etc/trudesk
 touch /etc/trudesk/logs/output.log
 echo -e "${BLUE}Building...${NC} (its going to take a few minutes)"
 npm install -g yarn pm2 grunt-cli;
