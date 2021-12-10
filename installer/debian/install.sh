@@ -53,11 +53,12 @@ case $response in
 *)
 	echo -e "Performing ${GREEN}apt-get update${NC}";
 	apt-get update;
-
-	if [ $(dpkg-query -W -f='${Status}' wget 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+	
+	WGET=$(dpkg-query -W -f='${Status}' wget 2>/dev/null | grep -c "ok installed")
+	if [ $WGET -eq 0 ]; then
 		echo -e "${YELLOW}Installing wget${NC}"
 		apt-get install wget --yes;
-	elif [ $(dpkg-query -W -f='${Status}' wget 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+	elif [ $WGET -eq 1 ]; then
 		echo -e "${GREEN}wget is installed!${NC}"
 	fi
 	  
