@@ -106,16 +106,16 @@ read -r -p "Do you want to install Elasticsearch? [y/N]: " response </dev/tty
 
 case $response in
 [yY]*)
-  echo -e "${YELLOW}Installing Elasticsearch${NC}"
-  wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add
-  echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-6.x.list
-  apt-get update;
-  apt-get install -y openjdk-8-jre;
-  apt-get install -y apt-transport-https elasticsearch kibana;
-  echo "network.host: [_local_]" >> /etc/elasticsearch/elasticsearch.yml
-  systemctl enable elasticsearch
-  systemctl start elasticsearch
-  ;;
+	echo -e "${YELLOW}Installing Elasticsearch${NC}"
+	wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add
+	echo "deb https://artifacts.elastic.co/packages/6.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-6.x.list
+	apt-get update;
+	apt-get install -y openjdk-8-jre;
+	apt-get install -y apt-transport-https elasticsearch kibana;
+	echo "network.host: [_local_]" >> /etc/elasticsearch/elasticsearch.yml
+	systemctl enable elasticsearch
+	systemctl start elasticsearch
+	;;
 esac
 
 read -r -p "Do you want to install MongoDB? [y/N]: " response </dev/tty
@@ -140,8 +140,8 @@ db.system.users.remove({});
 db.system.version.remove({});
 db.system.version.insert({"_id": "authSchema", "currentVersion": 3});
 EOL
-  mongo /etc/mongosetup.js
-  service mongod restart 
+	mongo /etc/mongosetup.js
+	service mongod restart 
 
 	echo "Restarting MongoDB..."
 	sleep 5
