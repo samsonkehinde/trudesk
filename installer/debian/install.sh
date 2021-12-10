@@ -61,48 +61,54 @@ case $response in
 	elif [ $WGET -eq 1 ]; then
 		echo -e "${GREEN}wget is installed!${NC}"
 	fi
-	  
-	if [ $(dpkg-query -W -f='${Status}' python 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+	
+	PYTHON=$(dpkg-query -W -f='${Status}' python 2>/dev/null | grep -c "ok installed")
+	if [ $PYTHON -eq 0 ]; then
 		echo -e "${YELLOW}Installing python${NC}"
 		apt-get install python --yes;
-	elif [ $(dpkg-query -W -f='${Status}' python 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+	elif [ $PYTHON -eq 1 ]; then
 		echo -e "${GREEN}python is installed!${NC}"
 	fi
 
-	if [ $(dpkg-query -W -f='${Status}' curl 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+	CURL=$(dpkg-query -W -f='${Status}' curl 2>/dev/null | grep -c "ok installed")
+	if [ $CURL -eq 0 ]; then
 		echo -e "${YELLOW}Installing curl${NC}"
 		apt-get install curl --yes;
-	elif [ $(dpkg-query -W -f='${Status}' curl 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+	elif [ $CURL -eq 1 ]; then
 		echo -e "${GREEN}curl is installed!${NC}"
 	fi
 
-	if [ $(dpkg-query -W -f='${Status}' gnupg 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+	GNUPG=$(dpkg-query -W -f='${Status}' gnupg 2>/dev/null | grep -c "ok installed")
+	if [ $GNUPG -eq 0 ]; then
 		echo -e "${YELLOW}Installing gnupg${NC}"
 		apt-get install gnupg --yes;
-	elif [ $(dpkg-query -W -f='${Status}' gnupg 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+	elif [ $GNUPG -eq 1 ]; then
 		echo -e "${GREEN}gnupg is installed!${NC}"
 	fi
 
-	if [ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+	GIT=$(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed")
+	if [ $GIT -eq 0 ]; then
 		echo -e "${YELLOW}Installing git${NC}"
 		apt-get install git --yes;
-	elif [ $(dpkg-query -W -f='${Status}' git 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+	elif [ $GIT -eq 1 ]; then
 		echo -e "${GREEN}git is installed!${NC}"
 	fi
 
-	if [ $(dpkg-query -W -f='${Status}' nodejs 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+	NODEJS=$(dpkg-query -W -f='${Status}' nodejs 2>/dev/null | grep -c "ok installed")
+	if [ $NODEJS -eq 0 ]; then
 		echo -e "${YELLOW}Installing nodejs${NC}"
 		curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash
 		apt-get install -y nodejs;
 		apt-get install -y build-essential;
-	elif [ $(dpkg-query -W -f='${Status}' nodejs 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+	elif [ $NODEJS -eq 1 ]; then
 		echo -e "${GREEN}nodejs is installed!${NC}"
 	fi
 	
-	if [ $(dpkg-query -W -f='${Status}' npm 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+	NPM=$(dpkg-query -W -f='${Status}' npm 2>/dev/null | grep -c "ok installed")
+	if [ $NPM -eq 0 ]; then
 		echo -e "${YELLOW}Installing npm${NC}"
 		apt-get install npm --yes;
-	elif [ $(dpkg-query -W -f='${Status}' npm 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+	elif [ $NPM -eq 1 ]; then
 		echo -e "${GREEN}npm is installed!${NC}"
 	fi
 	;;
