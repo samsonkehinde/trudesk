@@ -93,16 +93,6 @@ case $response in
 	elif [ $GIT -eq 1 ]; then
 		echo -e "${GREEN}git is installed!${NC}"
 	fi
-
-	NODEJS=$(dpkg-query -W -f='${Status}' nodejs 2>/dev/null | grep -c "ok installed")
-	if [ $NODEJS -eq 0 ]; then
-		echo -e "${YELLOW}Installing nodejs${NC}"
-		curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash
-		apt-get install -y nodejs;
-		apt-get install -y build-essential;
-	elif [ $NODEJS -eq 1 ]; then
-		echo -e "${GREEN}nodejs is installed!${NC}"
-	fi
 	
 	NPM=$(dpkg-query -W -f='${Status}' npm 2>/dev/null | grep -c "ok installed")
 	if [ $NPM -eq 0 ]; then
@@ -110,6 +100,16 @@ case $response in
 		apt-get install npm --yes;
 	elif [ $NPM -eq 1 ]; then
 		echo -e "${GREEN}npm is installed!${NC}"
+	fi
+	
+	NODE=$(nvm current 2>/dev/null | grep -c "v12")
+	if [ $NPM -eq 0 ]; then
+		curl -sL https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh -o install_nvm.sh
+		bash install_nvm.sh
+		source ~/.profile
+		nvm install v12.22.7 
+	elif [ $NPM -eq 1 ]; then
+		echo -e "${GREEN}node is installed!${NC}"
 	fi
 	;;
 esac
@@ -135,8 +135,8 @@ read -r -p "Do you want to install MongoDB? [y/N]: " response </dev/tty
 case $response in
 [yY]*)
 	echo -e "${YELLOW}Installing MongoDB 4.0${NC}"
-	wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
-	echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+	wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+	echo "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/5.0 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
 	apt-get update
 	apt-get install -y mongodb-org mongodb-org-shell
 	systemctl daemon-reload
