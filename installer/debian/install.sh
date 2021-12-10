@@ -97,6 +97,13 @@ case $response in
 	elif [ $(dpkg-query -W -f='${Status}' nodejs 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
 		echo -e "${GREEN}nodejs is installed!${NC}"
 	fi
+	
+	if [ $(dpkg-query -W -f='${Status}' npm 2>/dev/null | grep -c "ok installed") -eq 0 ]; then
+		echo -e "${YELLOW}Installing npm${NC}"
+		apt-get install npm --yes;
+	elif [ $(dpkg-query -W -f='${Status}' npm 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+		echo -e "${GREEN}npm is installed!${NC}"
+	fi
 	;;
 esac
 
